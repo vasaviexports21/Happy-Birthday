@@ -3,1160 +3,795 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday Thanmaie! 🎂✨</title>
+  <title>Happy Birthday Bestie! 🎉</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Dancing+Script:wght@700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;400;600;800&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind Configuration for Custom Fonts and Colors -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+            cursive: ['Dancing Script', 'cursive'],
+            playful: ['Fredoka', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              pink: '#ff758c',
+              purple: '#764ba2',
+              peach: '#ff7eb3',
+              gold: '#ffd700',
+              accent: '#ff2a74'
+            }
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-glow': 'pulseGlow 2s infinite',
+            'bounce-soft': 'bounceSoft 2s infinite',
+            'sparkle': 'sparkle 1.5s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-15px) rotate(3deg)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { boxShadow: '0 0 15px rgba(255, 117, 140, 0.6), 0 0 30px rgba(255, 126, 179, 0.4)' },
+              '50%': { boxShadow: '0 0 25px rgba(255, 117, 140, 0.9), 0 0 50px rgba(255, 126, 179, 0.7)' },
+            },
+            bounceSoft: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            sparkle: {
+              '0%': { opacity: '0.3', transform: 'scale(0.8)' },
+              '100%': { opacity: '1', transform: 'scale(1.2)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    :root {
-      --primary: #ff4081;
-      --primary-gradient: linear-gradient(135deg, #ff4081, #ff79b0);
-      --secondary: #7c4dff;
-      --accent: #ffd700;
-      --bg-dark: #0f0c1b;
-      --card-bg: rgba(255, 255, 255, 0.08);
-      --card-border: rgba(255, 255, 255, 0.18);
-      --text-light: #f8f9fa;
-      --shadow-glow: 0 0 25px rgba(255, 64, 129, 0.4);
+    /* Custom Scrollbar & Utility CSS */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 117, 140, 0.5);
+      border-radius: 4px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      user-select: none;
-    }
-
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-light);
-      font-family: 'Outfit', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Fullscreen Canvas background */
-    #bgCanvas, #confettiCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-    }
-    #bgCanvas { z-index: 1; }
-    #confettiCanvas { z-index: 99; }
-
-    /* Welcome/Gift Screen Overlay */
-    .gift-overlay {
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at center, #1f1435 0%, #0a0712 100%);
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 1s ease, visibility 1s ease;
-      cursor: pointer;
-    }
-
-    .gift-overlay.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .gift-box-container {
-      position: relative;
-      width: 160px;
-      height: 160px;
-      animation: bounce 2s infinite ease-in-out;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-20px) scale(1.05); }
-    }
-
-    .gift-box {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #ff4081, #d81b60);
-      border-radius: 16px;
-      position: relative;
-      box-shadow: 0 15px 35px rgba(255, 64, 129, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.3);
-    }
-
-    .gift-ribbon-v {
-      position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 30px; height: 100%;
-      background: #ffd700;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-    }
-
-    .gift-ribbon-h {
-      position: absolute;
-      top: 50%; left: 0;
-      transform: translateY(-50%);
-      width: 100%; height: 30px;
-      background: #ffd700;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-    }
-
-    .gift-bow {
-      position: absolute;
-      top: -25px; left: 50%;
-      transform: translateX(-50%);
-      width: 60px; height: 35px;
-      background: #ffd700;
-      border-radius: 50px 50px 0 0;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-    }
-
-    .gift-bow::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 15px; height: 35px;
-      background: #e6c200;
-      border-radius: 10px;
-    }
-
-    .tap-instruction {
-      margin-top: 35px;
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #ffd700;
-      letter-spacing: 1px;
-      animation: pulseText 1.5s infinite;
-      text-align: center;
-      padding: 0 20px;
-    }
-
-    @keyframes pulseText {
-      0%, 100% { opacity: 0.6; transform: scale(0.98); }
-      50% { opacity: 1; transform: scale(1.03); }
-    }
-
-    /* Main Content Layout */
-    .app-container {
-      position: relative;
-      z-index: 10;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px 20px 80px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 35px;
-    }
-
-    /* Top Audio Control */
-    .music-control {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 100;
+    /* Glassmorphism Classes */
+    .glass-card {
       background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--card-border);
-      border-radius: 50px;
-      padding: 10px 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      color: #fff;
-      font-size: 0.9rem;
-      font-weight: 600;
-      transition: all 0.3s;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-    .music-control:hover {
-      background: rgba(255, 255, 255, 0.25);
-      transform: scale(1.05);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
     }
 
-    /* Hero Banner Header */
-    .hero-header {
-      text-align: center;
-      margin-top: 20px;
+    .glass-card-dark {
+      background: rgba(18, 18, 30, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     }
 
-    .age-badge {
-      display: inline-block;
-      background: var(--primary-gradient);
-      padding: 6px 20px;
-      border-radius: 30px;
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      box-shadow: var(--shadow-glow);
-      margin-bottom: 15px;
-      animation: glow 3s ease-in-out infinite alternate;
+    /* Envelope styling */
+    .envelope-wrapper {
+      perspective: 1000px;
+    }
+    
+    .envelope-lid {
+      transform-origin: top;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    @keyframes glow {
-      from { box-shadow: 0 0 10px rgba(ff, 64, 129, 0.4); }
-      to { box-shadow: 0 0 25px rgba(255, 64, 129, 0.9), 0 0 10px rgba(255, 215, 0, 0.6); }
+    .envelope-open .envelope-lid {
+      transform: rotateX(180deg);
     }
 
-    .main-title {
-      font-family: 'Fredoka', cursive;
-      font-size: clamp(2.5rem, 8vw, 4.5rem);
-      background: linear-gradient(180deg, #ffffff 30%, #ffc1e3 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      line-height: 1.15;
-      margin-bottom: 10px;
-      text-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    }
-
-    .friend-name {
-      color: var(--accent);
-      font-family: 'Dancing Script', cursive;
-      font-size: clamp(3.5rem, 10vw, 6rem);
-      display: block;
-      text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-      margin-top: -10px;
-    }
-
-    .sub-greeting {
-      font-size: 1.2rem;
-      color: rgba(255,255,255,0.8);
-      max-width: 600px;
-      margin: 10px auto 0;
-    }
-
-    /* Interactive Birthday Cake Section */
-    .cake-section {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      backdrop-filter: blur(15px);
-      border-radius: 30px;
-      width: 100%;
-      padding: 40px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    }
-
+    /* Custom 3D Cake CSS */
     .cake-container {
       position: relative;
-      width: 240px;
+      width: 220px;
       height: 200px;
-      margin-top: 30px;
-      cursor: pointer;
+      margin: 0 auto;
     }
 
-    /* Cake 3D Layers */
-    .cake-base {
+    .cake-tier {
       position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 12px 12px 18px 18px;
+      box-shadow: inset 0 -10px 0 rgba(0,0,0,0.1), 0 8px 15px rgba(0,0,0,0.15);
+    }
+
+    .tier-bottom {
       bottom: 0;
-      width: 240px;
-      height: 70px;
-      background: linear-gradient(to right, #4a2c11, #7b4a1e, #4a2c11);
-      border-radius: 15px 15px 10px 10px;
-      box-shadow: 0 10px 0 #2d1a0a, 0 15px 20px rgba(0,0,0,0.5);
-    }
-
-    .cake-middle {
-      position: absolute;
-      bottom: 60px;
-      left: 20px;
       width: 200px;
-      height: 60px;
-      background: linear-gradient(to right, #ff80ab, #ff4081, #ff80ab);
-      border-radius: 12px;
-      box-shadow: 0 8px 0 #c2185b;
+      height: 70px;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
     }
 
-    .cake-top {
-      position: absolute;
-      bottom: 115px;
-      left: 40px;
-      width: 160px;
+    .tier-middle {
+      bottom: 60px;
+      width: 150px;
       height: 55px;
-      background: linear-gradient(to right, #fff, #ffe4e1, #fff);
-      border-radius: 10px 10px 8px 8px;
-      box-shadow: 0 6px 0 #e0e0e0;
+      background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
     }
 
-    /* Cream Drips */
-    .drip {
+    .tier-top {
+      bottom: 110px;
+      width: 100px;
+      height: 45px;
+      background: linear-gradient(135deg, #ffbcd9 0%, #fbe0e8 100%);
+    }
+
+    .cake-icing {
       position: absolute;
       top: 0;
+      width: 100%;
+      height: 15px;
       background: #ffffff;
-      height: 18px;
-      width: 20px;
-      border-radius: 0 0 10px 10px;
+      border-radius: 10px 10px 10px 10px;
+      opacity: 0.9;
     }
 
-    /* Candle & Flame */
-    .candles-group {
-      position: absolute;
-      top: 5px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 20px;
-    }
-
-    .candle {
-      position: relative;
-      width: 12px;
-      height: 45px;
-      background: repeating-linear-gradient(45deg, #ffd700, #ffd700 5px, #ff9800 5px, #ff9800 10px);
-      border-radius: 4px 4px 0 0;
-    }
-
+    /* Candle Flame Animation */
     .flame {
-      position: absolute;
-      top: -22px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 14px;
-      height: 22px;
-      background: radial-gradient(ellipse at bottom, #ffeb3b 0%, #ff5722 100%);
-      border-radius: 50% 50% 30% 30%;
-      box-shadow: 0 0 15px #ff9800, 0 0 25px #ff5722;
-      animation: flicker 0.2s infinite alternate ease-in-out;
+      width: 12px;
+      height: 20px;
+      background: linear-gradient(to bottom, #fff 0%, #ffeb3b 50%, #ff5722 100%);
+      border-radius: 50% 50% 20% 20%;
+      box-shadow: 0 0 10px #ffeb3b, 0 0 20px #ff5722;
+      animation: flicker 0.1s infinite alternate;
       transform-origin: center bottom;
-      transition: all 0.3s;
     }
 
-    .flame.out {
-      opacity: 0;
-      transform: translateX(-50%) scale(0);
+    @keyframes flicker {
+      0% { transform: scale(1) rotate(-2deg); }
+      100% { transform: scale(1.1) rotate(2deg); }
+    }
+
+    .flame.extinguished {
+      display: none;
     }
 
     .smoke {
       position: absolute;
-      top: -25px;
-      left: 50%;
-      transform: translateX(-50%);
       width: 6px;
-      height: 6px;
-      background: rgba(200, 200, 200, 0.8);
+      height: 15px;
+      background: rgba(200, 200, 200, 0.6);
       border-radius: 50%;
-      opacity: 0;
-      pointer-events: none;
+      animation: rise 1.5s ease-out forwards;
+      display: none;
     }
 
-    .smoke.active {
-      animation: smokeRise 1.5s forwards ease-out;
-    }
-
-    @keyframes smokeRise {
-      0% { opacity: 0.8; transform: translate(-50%, 0) scale(1); }
-      100% { opacity: 0; transform: translate(-50%, -40px) scale(3); }
-    }
-
-    @keyframes flicker {
-      0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
-      100% { transform: translateX(-50%) scale(1.1) rotate(2deg); }
-    }
-
-    .cake-hint {
-      margin-top: 25px;
-      font-size: 0.95rem;
-      color: #ffd700;
-      background: rgba(255, 215, 0, 0.1);
-      padding: 8px 18px;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 215, 0, 0.3);
-    }
-
-    /* Interactive Floating Balloons Section */
-    .balloon-zone {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .zone-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .balloons-flex {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      width: 100%;
-      padding: 20px 0;
-    }
-
-    .balloon-item {
-      width: 75px;
-      height: 95px;
-      border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-      position: relative;
-      cursor: pointer;
-      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      animation: floatUp 3s ease-in-out infinite alternate;
-      box-shadow: inset -10px -10px 20px rgba(0,0,0,0.2), 0 10px 15px rgba(0,0,0,0.3);
-    }
-
-    .balloon-item::after {
-      content: '';
-      position: absolute;
-      bottom: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-bottom: 8px solid inherit;
-    }
-
-    .balloon-string {
-      position: absolute;
-      bottom: -40px;
-      left: 50%;
-      width: 2px;
-      height: 35px;
-      background: rgba(255, 255, 255, 0.4);
-      transform: translateX(-50%);
-    }
-
-    .balloon-item:hover {
-      transform: scale(1.15) translateY(-5px);
-    }
-
-    .balloon-item.popped {
-      animation: popAnim 0.3s forwards ease-out !important;
-    }
-
-    @keyframes popAnim {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.4); opacity: 0.8; }
-      100% { transform: scale(0); opacity: 0; }
-    }
-
-    @keyframes floatUp {
-      0% { transform: translateY(0) rotate(-3deg); }
-      100% { transform: translateY(-18px) rotate(3deg); }
-    }
-
-    /* Cards / Memories Section */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      width: 100%;
-    }
-
-    .memory-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 25px;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .memory-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      border-color: rgba(255, 64, 129, 0.5);
-      box-shadow: 0 15px 35px rgba(255, 64, 129, 0.2);
-    }
-
-    .card-icon {
-      font-size: 2.2rem;
-    }
-
-    .card-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .card-body {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.85);
-    }
-
-    /* Personal Message Letter Frame */
-    .letter-frame {
-      background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
-      border: 1px solid rgba(255, 215, 0, 0.3);
-      backdrop-filter: blur(15px);
-      border-radius: 25px;
-      padding: 35px;
-      width: 100%;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-      position: relative;
-    }
-
-    .letter-frame::before {
-      content: '“';
-      position: absolute;
-      top: 10px;
-      left: 20px;
-      font-size: 5rem;
-      color: rgba(255, 215, 0, 0.15);
-      font-family: serif;
-      line-height: 1;
-    }
-
-    .letter-title {
-      font-size: 1.6rem;
-      color: #ffd700;
-      font-family: 'Dancing Script', cursive;
-      font-size: 2.5rem;
-      margin-bottom: 15px;
-    }
-
-    .letter-content {
-      font-size: 1.05rem;
-      line-height: 1.8;
-      color: #f1f1f1;
-      white-space: pre-line;
-    }
-
-    .letter-signature {
-      margin-top: 25px;
-      text-align: right;
-      font-family: 'Dancing Script', cursive;
-      font-size: 2rem;
-      color: var(--primary);
-    }
-
-    /* Floating Action / Customizer Modal Button */
-    .customize-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 200;
-      background: var(--primary-gradient);
-      color: #fff;
-      border: none;
-      border-radius: 50px;
-      padding: 12px 24px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
-      box-shadow: 0 10px 25px rgba(255, 64, 129, 0.5);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.3s;
-    }
-    .customize-btn:hover {
-      transform: scale(1.08);
-    }
-
-    /* Modal Styling */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(8px);
-      z-index: 2000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.3s;
-    }
-
-    .modal-overlay.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .modal-card {
-      background: #18132b;
-      border: 1px solid var(--card-border);
-      width: 100%;
-      max-width: 500px;
-      border-radius: 25px;
-      padding: 30px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .modal-header {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .form-group label {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.7);
-    }
-
-    .form-group input, .form-group textarea {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 10px;
-      padding: 10px 14px;
-      color: #fff;
-      font-family: inherit;
-      outline: none;
-    }
-
-    .form-group input:focus, .form-group textarea:focus {
-      border-color: var(--primary);
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .btn {
-      padding: 10px 20px;
-      border-radius: 10px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; }
-    .btn-primary { background: var(--primary-gradient); color: #fff; }
-
-    /* Responsive adjustment */
-    @media (max-width: 600px) {
-      .app-container { padding: 15px 15px 90px 15px; }
-      .cake-section { padding: 30px 15px; }
-      .letter-frame { padding: 25px; }
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 0.8; }
+      100% { transform: translateY(-30px) scale(2.5); opacity: 0; }
     }
   </style>
 </head>
-<body>
 
-  <!-- Background Animated Canvases -->
-  <canvas id="bgCanvas"></canvas>
-  <canvas id="confettiCanvas"></canvas>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen overflow-x-hidden relative selection:bg-brand-pink selection:text-white">
 
-  <!-- Interactive Unfolding Gift Overlay -->
-  <div class="gift-overlay" id="giftOverlay">
-    <div class="gift-box-container">
-      <div class="gift-bow"></div>
-      <div class="gift-box">
-        <div class="gift-ribbon-v"></div>
-        <div class="gift-ribbon-h"></div>
+  <!-- Confetti / Particle Canvas Overlay -->
+  <canvas id="canvas-confetti" class="fixed inset-0 pointer-events-none z-50"></canvas>
+  <canvas id="canvas-bg" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+
+  <!-- Ambient Light Effect Spheres -->
+  <div class="fixed top-1/4 -left-32 w-96 h-96 bg-brand-pink/30 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
+  <div class="fixed bottom-1/4 -right-32 w-96 h-96 bg-brand-purple/30 rounded-full blur-3xl pointer-events-none animate-pulse-glow" style="animation-delay: 1s;"></div>
+
+  <!-- Audio Element Controls Container (Top Bar) -->
+  <header class="fixed top-4 right-4 z-40 flex items-center gap-3">
+    <button id="btn-customizer" title="Customize Bestie Details" class="glass-card hover:bg-white/20 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 shadow-lg flex items-center justify-center">
+      <i class="fa-solid fa-wand-magic-sparkles text-xl text-yellow-300"></i>
+    </button>
+    <button id="btn-audio" title="Toggle Music" class="glass-card hover:bg-white/20 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 shadow-lg flex items-center justify-center">
+      <i id="audio-icon" class="fa-solid fa-music text-xl text-brand-pink"></i>
+    </button>
+  </header>
+
+  <!-- INTRO SCREEN / ENVELOPE GIFT BOX -->
+  <section id="screen-intro" class="fixed inset-0 z-30 flex flex-col items-center justify-center p-4 bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 transition-opacity duration-1000">
+    <div class="text-center mb-8 animate-bounce-soft">
+      <span class="bg-brand-pink/20 text-brand-pink border border-brand-pink/30 px-4 py-1.5 rounded-full text-sm font-semibold tracking-wider uppercase">Special Delivery 💌</span>
+      <h1 class="text-3xl md:text-5xl font-extrabold mt-3 font-playful text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-300">
+        You've Got a Surprise!
+      </h1>
+      <p class="text-slate-400 text-sm md:text-base mt-2">Tap the gift envelope below to open your birthday surprise</p>
+    </div>
+
+    <!-- Interactive Envelope Container -->
+    <div id="envelope-container" class="envelope-wrapper cursor-pointer group relative">
+      <!-- Glow Aura -->
+      <div class="absolute -inset-4 bg-gradient-to-r from-pink-600 to-purple-600 rounded-2xl blur-lg opacity-70 group-hover:opacity-100 transition duration-500 animate-pulse"></div>
+      
+      <!-- Main Envelope Body -->
+      <div class="relative w-72 h-48 md:w-80 md:h-52 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl shadow-2xl flex items-center justify-center border border-white/20 overflow-hidden">
+        
+        <!-- Wax Seal Button -->
+        <div id="envelope-seal" class="z-20 w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center shadow-2xl border-2 border-yellow-200 group-hover:scale-110 transition-transform duration-300">
+          <i class="fa-solid fa-heart text-2xl text-red-700"></i>
+        </div>
+
+        <!-- Envelope Decorative Ribbons -->
+        <div class="absolute inset-x-0 top-1/2 h-8 bg-white/10 backdrop-blur-sm -translate-y-1/2 pointer-events-none"></div>
+        <div class="absolute inset-y-0 left-1/2 w-8 bg-white/10 backdrop-blur-sm -translate-x-1/2 pointer-events-none"></div>
+
+        <p class="absolute bottom-3 text-xs font-semibold text-white/80 tracking-widest uppercase">Click To Open</p>
       </div>
     </div>
-    <div class="tap-instruction">🎁 Tap to open your birthday surprise! ✨</div>
-  </div>
+  </section>
 
-  <!-- Music Control Floating Button -->
-  <button class="music-control" id="musicToggleBtn" title="Toggle Festive Music">
-    <span id="musicIcon">🎵</span>
-    <span id="musicStatus">Music: OFF</span>
-  </button>
+  <!-- MAIN EXPERIENCE CONTAINER -->
+  <main id="main-experience" class="hidden relative z-10 min-h-screen px-4 py-12 max-w-5xl mx-auto flex flex-col items-center justify-start gap-12 opacity-0 transition-opacity duration-1000">
 
-  <!-- Main App Layout -->
-  <div class="app-container">
+    <!-- HERO / WISH BANNER -->
+    <section class="w-full text-center space-y-4 pt-6">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-brand-pink text-sm font-semibold tracking-wide animate-pulse">
+        <i class="fa-solid fa-sparkles"></i> Best Friends Forever <i class="fa-solid fa-sparkles"></i>
+      </div>
 
-    <!-- Hero Header -->
-    <header class="hero-header">
-      <div class="age-badge" id="displayAge">Heavenly Twenty</div>
-      <h1 class="main-title">Happy Birthday</h1>
-      <span class="friend-name" id="displayName">Thanmaie</span>
-      <p class="sub-greeting">Wishing you a day filled with infinite laughter, magical moments, and all the love you bring into the world!</p>
-    </header>
+      <h1 class="text-4xl md:text-7xl font-extrabold font-playful tracking-tight">
+        Happy Birthday, <span id="display-name" class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-300 to-yellow-300">Alex</span>! 🎂
+      </h1>
 
-    <!-- Interactive Cake Section -->
-    <section class="cake-section">
-      <h2 style="font-size: 1.4rem; color: #fff;">Make a Wish & Blow Out The Candles! 🕯️</h2>
-      
-      <div class="cake-container" id="cakeContainer" title="Click to blow out candles!">
-        <!-- Cake Top -->
-        <div class="cake-top">
-          <div class="drip" style="left: 10px; height: 22px;"></div>
-          <div class="drip" style="left: 45px; height: 16px;"></div>
-          <div class="drip" style="left: 80px; height: 25px;"></div>
-          <div class="drip" style="left: 125px; height: 18px;"></div>
-          
-          <div class="candles-group">
-            <div class="candle">
-              <div class="flame" id="flame1"></div>
-              <div class="smoke" id="smoke1"></div>
-            </div>
-            <div class="candle">
-              <div class="flame" id="flame2"></div>
-              <div class="smoke" id="smoke2"></div>
-            </div>
-            <div class="candle">
-              <div class="flame" id="flame3"></div>
-              <div class="smoke" id="smoke3"></div>
-            </div>
+      <p class="text-slate-300 max-w-xl mx-auto text-base md:text-lg font-light leading-relaxed">
+        Today is all about celebrating <span class="font-semibold text-brand-pink">YOU</span>! Thank you for being the most incredible best friend in the world.
+      </p>
+
+      <!-- Live Counter / Days of Friendship Badge -->
+      <div class="flex justify-center items-center gap-4 pt-2">
+        <div class="glass-card px-5 py-2.5 rounded-2xl flex items-center gap-3">
+          <i class="fa-solid fa-cake-candles text-2xl text-yellow-400"></i>
+          <div class="text-left">
+            <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">Turning Age</div>
+            <div id="display-age" class="text-lg font-bold text-white">21 Years Young</div>
           </div>
         </div>
 
-        <!-- Cake Middle -->
-        <div class="cake-middle">
-          <div class="drip" style="left: 20px; height: 18px; background:#ffd700;"></div>
-          <div class="drip" style="left: 90px; height: 22px; background:#ffd700;"></div>
-          <div class="drip" style="left: 150px; height: 16px; background:#ffd700;"></div>
+        <div class="glass-card px-5 py-2.5 rounded-2xl flex items-center gap-3">
+          <i class="fa-solid fa-heart-pulse text-2xl text-pink-500"></i>
+          <div class="text-left">
+            <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">Status</div>
+            <div class="text-lg font-bold text-white">Main Character 👑</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE 3D CAKE & BLOW CANDLE SECTION -->
+    <section class="w-full max-w-2xl glass-card rounded-3xl p-8 flex flex-col items-center justify-center text-center relative overflow-hidden">
+      <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-pink-500/10 rounded-full blur-2xl"></div>
+      
+      <h2 class="text-2xl font-bold font-playful text-slate-100 mb-2">Make a Wish! 🌠</h2>
+      <p id="candle-instructions" class="text-sm text-slate-300 mb-8">
+        Click on the candle flames (or the button below) to blow out the candles!
+      </p>
+
+      <!-- Cake Wrapper -->
+      <div class="my-6 relative py-4">
+        <div class="cake-container">
+          <!-- Top Tier -->
+          <div class="cake-tier tier-top">
+            <div class="cake-icing"></div>
+          </div>
+          <!-- Middle Tier -->
+          <div class="cake-tier tier-middle">
+            <div class="cake-icing"></div>
+          </div>
+          <!-- Bottom Tier -->
+          <div class="cake-tier tier-bottom">
+            <div class="cake-icing"></div>
+          </div>
+
+          <!-- Candle 1 -->
+          <div class="candle-item absolute left-[35%] top-[5px] flex flex-col items-center cursor-pointer group" onclick="popOrExtinguishCandle(0)">
+            <div id="flame-0" class="flame"></div>
+            <div id="smoke-0" class="smoke"></div>
+            <div class="w-2.5 h-12 bg-gradient-to-b from-yellow-200 to-amber-400 rounded-sm shadow"></div>
+          </div>
+
+          <!-- Candle 2 (Center) -->
+          <div class="candle-item absolute left-[50%] -translate-x-1/2 top-[-10px] flex flex-col items-center cursor-pointer group" onclick="popOrExtinguishCandle(1)">
+            <div id="flame-1" class="flame"></div>
+            <div id="smoke-1" class="smoke"></div>
+            <div class="w-2.5 h-14 bg-gradient-to-b from-pink-200 to-rose-400 rounded-sm shadow"></div>
+          </div>
+
+          <!-- Candle 3 -->
+          <div class="candle-item absolute right-[35%] top-[5px] flex flex-col items-center cursor-pointer group" onclick="popOrExtinguishCandle(2)">
+            <div id="flame-2" class="flame"></div>
+            <div id="smoke-2" class="smoke"></div>
+            <div class="w-2.5 h-12 bg-gradient-to-b from-purple-200 to-indigo-400 rounded-sm shadow"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blow Candles Action Button -->
+      <div class="mt-4 flex flex-wrap gap-4 justify-center">
+        <button id="btn-blow-candles" class="bg-gradient-to-r from-brand-pink to-brand-purple hover:from-pink-600 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition active:scale-95 flex items-center gap-2">
+          <i class="fa-solid fa-wind"></i> Blow Out Candles
+        </button>
+        <button id="btn-relight-candles" class="hidden glass-card hover:bg-white/20 text-white font-semibold py-3 px-6 rounded-full shadow transition flex items-center gap-2">
+          <i class="fa-solid fa-fire text-amber-400"></i> Relight Candles
+        </button>
+      </div>
+    </section>
+
+    <!-- BALLOON POP PLAYGROUND -->
+    <section class="w-full glass-card rounded-3xl p-6 md:p-8 relative">
+      <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+        <div class="text-center md:text-left">
+          <h2 class="text-2xl font-bold font-playful">Pop The Party Balloons! 🎈</h2>
+          <p class="text-xs md:text-sm text-slate-300">Click or tap any balloon to pop it for a surprise confetti burst!</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs uppercase font-bold text-slate-400 tracking-wider">Score:</span>
+          <span id="balloon-score" class="text-2xl font-black text-brand-pink font-playful glass-card px-4 py-1 rounded-xl">0</span>
+          <button id="btn-spawn-balloons" class="text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-lg font-semibold transition">
+            <i class="fa-solid fa-arrows-rotate mr-1"></i> Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Balloon Floating Arena -->
+      <div id="balloon-container" class="relative h-64 md:h-72 w-full bg-slate-900/40 rounded-2xl overflow-hidden border border-white/5 flex items-center justify-around p-4">
+        <!-- Dynamic balloons populated via JS -->
+      </div>
+    </section>
+
+    <!-- HEARTFELT WISH CARD & MEMORY GALLERY -->
+    <section class="w-full grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <!-- Main Wish Letter (Spans 2 columns on desktop) -->
+      <div class="md:col-span-2 glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden">
+        <div class="absolute top-0 right-0 p-6 text-pink-500/20 text-8xl font-serif pointer-events-none">“</div>
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full bg-brand-pink/20 flex items-center justify-center text-brand-pink">
+              <i class="fa-solid fa-envelope-open-text"></i>
+            </div>
+            <h3 class="text-xl font-bold font-playful">A Special Note For You</h3>
+          </div>
+
+          <p id="display-message" class="text-slate-200 text-base md:text-lg leading-relaxed whitespace-pre-line font-cursive text-2xl md:text-3xl text-pink-100">
+            To my incredible best friend! Thank you for all the endless laughs, late-night chats, and unforgettable adventures. You deserve the absolute best today and every single day. Here is to another year of creating memories together! ✨️🥂
+          </p>
         </div>
 
-        <!-- Cake Base -->
-        <div class="cake-base"></div>
+        <div class="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+          <span>Sent with ❤️ by your Bestie</span>
+          <span id="display-date">Forever & Always</span>
+        </div>
       </div>
 
-      <div class="cake-hint" id="cakeStatusText">✨ Tap the cake to blow out the candles!</div>
-    </section>
+      <!-- Interactive Photo Memory Placeholders -->
+      <div class="glass-card rounded-3xl p-6 flex flex-col justify-between space-y-4">
+        <h3 class="text-lg font-bold font-playful flex items-center gap-2">
+          <i class="fa-solid fa-images text-purple-400"></i> Memory Vault
+        </h3>
 
-    <!-- Pop the Balloons Zone -->
-    <section class="balloon-zone">
-      <div class="zone-title">Pop All The Birthday Balloons! 🎈</div>
-      <div class="balloons-flex" id="balloonContainer">
-        <!-- Generated dynamically via JavaScript -->
-      </div>
-    </section>
+        <!-- Memory Card 1 -->
+        <div class="group relative rounded-2xl overflow-hidden border border-white/10 bg-slate-900/50 aspect-video flex items-center justify-center text-center p-4 transition duration-300 hover:scale-[1.02]">
+          <div class="space-y-1">
+            <i class="fa-solid fa-camera-retro text-2xl text-slate-400 group-hover:text-brand-pink transition"></i>
+            <p class="text-xs font-semibold text-slate-300">Best Adventure</p>
+            <p class="text-[10px] text-slate-500">Tap customizer to add photos!</p>
+          </div>
+        </div>
 
-    <!-- Friendship Memory Cards Grid -->
-    <section class="cards-grid">
-      <div class="memory-card">
-        <div class="card-icon">🌟</div>
-        <div class="card-title">Pure Magic</div>
-        <div class="card-body">Every moment spent with you turns into an unforgettable core memory. Thank you for making life so incredibly bright!</div>
-      </div>
-      <div class="memory-card">
-        <div class="card-icon">👑</div>
-        <div class="card-title">One in a Million</div>
-        <div class="card-body">Your kindness, warmth, and iconic laugh can light up even the darkest room. You truly deserve the world!</div>
-      </div>
-      <div class="memory-card">
-        <div class="card-icon">🚀</div>
-        <div class="card-title">Unstoppable</div>
-        <div class="card-body">Here's to stepping into your 20s with confidence, big dreams, and all the success you naturally inspire.</div>
+        <!-- Memory Card 2 -->
+        <div class="group relative rounded-2xl overflow-hidden border border-white/10 bg-slate-900/50 aspect-video flex items-center justify-center text-center p-4 transition duration-300 hover:scale-[1.02]">
+          <div class="space-y-1">
+            <i class="fa-solid fa-face-laugh-beam text-2xl text-slate-400 group-hover:text-amber-400 transition"></i>
+            <p class="text-xs font-semibold text-slate-300">Unstoppable Duo</p>
+            <p class="text-[10px] text-slate-500">Always making memories</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Personal Heartfelt Letter -->
-    <section class="letter-frame">
-      <div class="letter-title">Dear <span id="letterName">Thanmaie</span>,</div>
-      <div class="letter-content" id="displayLetter">
-Happy 20th Birthday! 🎉
+    <!-- FOOTER SHARE / REPLAY -->
+    <footer class="w-full text-center py-6 text-slate-500 text-xs">
+      <p>Made with love & code for your best friend ✨</p>
+    </footer>
+  </main>
 
-Words aren't enough to express how lucky I am to have you as my best friend. From random midnight thoughts to endless laughter and constant support, you've been a irreplaceable pillar in my life.
+  <!-- MODAL: LIVE CUSTOMIZER MODAL -->
+  <div id="modal-customizer" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+    <div class="glass-card-dark rounded-3xl w-full max-w-lg p-6 md:p-8 space-y-6 border border-white/20 shadow-2xl relative">
+      <button id="btn-close-modal" class="absolute top-5 right-5 text-slate-400 hover:text-white text-xl">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
 
-As you turn 20 today, I hope this new chapter brings you boundless joy, exciting adventures, serene peace, and every bit of happiness you dream of. Keep shining as brilliantly as you always do!
-
-Cheering for you always,
-Your Best Friend ✨
-      </div>
-      <div class="letter-signature">Forever & Always ❤️</div>
-    </section>
-
-  </div>
-
-  <!-- Customizer Floating Trigger Button -->
-  <button class="customize-btn" id="openModalBtn">
-    <span>🪄 Customize</span>
-  </button>
-
-  <!-- Live Customizer Modal Dialog -->
-  <div class="modal-overlay" id="customModal">
-    <div class="modal-card">
-      <div class="modal-header">✨ Personalize Her Surprise</div>
-      
-      <div class="form-group">
-        <label for="inputName">Best Friend's Name</label>
-        <input type="text" id="inputName" value="Thanmaie">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-yellow-400/20 flex items-center justify-center text-yellow-300">
+          <i class="fa-solid fa-sliders"></i>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold">Customize Birthday Surprise</h3>
+          <p class="text-xs text-slate-400">Tailor the name, age, and greeting for your best friend</p>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="inputAge">Age / Title Badge</label>
-        <input type="text" id="inputAge" value="Heavenly Twenty">
+      <div class="space-y-4 text-sm">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">Bestie's Name</label>
+          <input type="text" id="input-name" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-brand-pink transition" placeholder="e.g. Sarah">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">Age Turning</label>
+          <input type="text" id="input-age" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-brand-pink transition" placeholder="e.g. 21 Years Young">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">Personal Wish Message</label>
+          <textarea id="input-message" rows="4" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-brand-pink transition resize-none" placeholder="Write your heartfelt note here..."></textarea>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="inputLetter">Personal Birthday Message</label>
-        <textarea id="inputLetter" rows="6">Happy 20th Birthday! 🎉
-
-Words aren't enough to express how lucky I am to have you as my best friend. From random midnight thoughts to endless laughter and constant support, you've been a irreplaceable pillar in my life.
-
-As you turn 20 today, I hope this new chapter brings you boundless joy, exciting adventures, serene peace, and every bit of happiness you dream of. Keep shining as brilliantly as you always do!
-
-Cheering for you always,
-Your Best Friend ✨</textarea>
-      </div>
-
-      <div class="modal-actions">
-        <button class="btn btn-secondary" id="closeModalBtn">Cancel</button>
-        <button class="btn btn-primary" id="saveCustomBtn">Save & Apply</button>
+      <div class="flex justify-end gap-3 pt-2">
+        <button id="btn-save-customizer" class="w-full bg-gradient-to-r from-brand-pink to-brand-purple hover:opacity-90 text-white font-bold py-3 rounded-xl transition shadow-lg">
+          Save & Apply Changes 💖
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Main JavaScript Logic -->
+  <!-- JAVASCRIPT ANIMATIONS & AUDIO CONTROLLER -->
   <script>
-    /* ==========================================
-       1. WEB AUDIO API SYNTHESIZER (No external audio file)
-       ========================================== */
-    class AudioSynthesizer {
-      constructor() {
-        this.ctx = null;
-        this.isPlaying = false;
-        this.timer = null;
-      }
+    // App State Management
+    const state = {
+      name: "Alex",
+      age: "21 Years Young",
+      message: "To my incredible best friend!\nThank you for all the endless laughs, late-night chats, and unforgettable adventures. You deserve the absolute best today and every single day! ✨🥂",
+      candlesLit: 3,
+      score: 0,
+      isPlayingAudio: false,
+      audioCtx: null,
+      audioOscillators: []
+    };
 
-      init() {
-        if (!this.ctx) {
-          const AudioContext = window.AudioContext || window.webkitAudioContext;
-          this.ctx = new AudioContext();
-        }
-      }
+    // --- CONFETTI & PARTICLE ENGINE ---
+    const confettiCanvas = document.getElementById('canvas-confetti');
+    const ctx = confettiCanvas.getContext('2d');
+    let particles = [];
 
-      playPop() {
-        this.init();
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(400, this.ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(800, this.ctx.currentTime + 0.08);
-        
-        gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.08);
-
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(this.ctx.currentTime + 0.08);
-      }
-
-      playTone(freq, duration, delay = 0) {
-        setTimeout(() => {
-          if (!this.isPlaying) return;
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-
-          gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration - 0.05);
-
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
-          osc.start();
-          osc.stop(this.ctx.currentTime + duration);
-        }, delay * 1000);
-      }
-
-      startTune() {
-        this.init();
-        this.isPlaying = true;
-
-        // Happy Birthday Melody Frequencies
-        const notes = [
-          { f: 264, d: 0.4 }, { f: 264, d: 0.4 }, { f: 297, d: 0.8 }, { f: 264, d: 0.8 }, { f: 352, d: 0.8 }, { f: 330, d: 1.2 },
-          { f: 264, d: 0.4 }, { f: 264, d: 0.4 }, { f: 297, d: 0.8 }, { f: 264, d: 0.8 }, { f: 396, d: 0.8 }, { f: 352, d: 1.2 },
-          { f: 264, d: 0.4 }, { f: 264, d: 0.4 }, { f: 528, d: 0.8 }, { f: 440, d: 0.8 }, { f: 352, d: 0.8 }, { f: 330, d: 0.8 }, { f: 297, d: 0.8 },
-          { f: 466, d: 0.4 }, { f: 466, d: 0.4 }, { f: 440, d: 0.8 }, { f: 352, d: 0.8 }, { f: 396, d: 0.8 }, { f: 352, d: 1.4 }
-        ];
-
-        let currentTime = 0;
-        const playSequence = () => {
-          if (!this.isPlaying) return;
-          currentTime = 0;
-          notes.forEach((note) => {
-            this.playTone(note.f, note.d, currentTime);
-            currentTime += note.d + 0.05;
-          });
-          this.timer = setTimeout(playSequence, currentTime * 1000 + 1000);
-        };
-
-        playSequence();
-      }
-
-      stopTune() {
-        this.isPlaying = false;
-        if (this.timer) clearTimeout(this.timer);
-      }
-    }
-
-    const synth = new AudioSynthesizer();
-
-    /* Music Toggle Controls */
-    const musicBtn = document.getElementById('musicToggleBtn');
-    const musicIcon = document.getElementById('musicIcon');
-    const musicStatus = document.getElementById('musicStatus');
-
-    musicBtn.addEventListener('click', () => {
-      if (synth.isPlaying) {
-        synth.stopTune();
-        musicIcon.textContent = '🎵';
-        musicStatus.textContent = 'Music: OFF';
-      } else {
-        synth.startTune();
-        musicIcon.textContent = '🎶';
-        musicStatus.textContent = 'Music: ON';
-      }
-    });
-
-    /* ==========================================
-       2. BACKGROUND PARTICLES CANVAS
-       ========================================== */
-    const bgCanvas = document.getElementById('bgCanvas');
-    const bgCtx = bgCanvas.getContext('2d');
-
-    let bgParticles = [];
-
-    function resizeBg() {
-      bgCanvas.width = window.innerWidth;
-      bgCanvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeBg);
-    resizeBg();
-
-    class BgParticle {
-      constructor() {
-        this.reset();
-      }
-      reset() {
-        this.x = Math.random() * bgCanvas.width;
-        this.y = Math.random() * bgCanvas.height + bgCanvas.height;
-        this.size = Math.random() * 4 + 1;
-        this.speedY = Math.random() * 1.5 + 0.5;
-        this.speedX = Math.sin(Math.random() * Math.PI * 2) * 0.5;
-        this.opacity = Math.random() * 0.5 + 0.2;
-        this.color = `hsl(${Math.random() * 360}, 80%, 70%)`;
-      }
-      update() {
-        this.y -= this.speedY;
-        this.x += this.speedX;
-        if (this.y < -10) this.reset();
-      }
-      draw() {
-        bgCtx.save();
-        bgCtx.globalAlpha = this.opacity;
-        bgCtx.fillStyle = this.color;
-        bgCtx.beginPath();
-        bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        bgCtx.fill();
-        bgCtx.restore();
-      }
-    }
-
-    for (let i = 0; i < 60; i++) {
-      bgParticles.push(new BgParticle());
-    }
-
-    function animateBg() {
-      bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
-      bgParticles.forEach(p => {
-        p.update();
-        p.draw();
-      });
-      requestAnimationFrame(animateBg);
-    }
-    animateBg();
-
-    /* ==========================================
-       3. CONFETTI BURST SYSTEM
-       ========================================== */
-    const confettiCanvas = document.getElementById('confettiCanvas');
-    const confettiCtx = confettiCanvas.getContext('2d');
-
-    let confettiParticles = [];
-
-    function resizeConfetti() {
+    function resizeCanvas() {
       confettiCanvas.width = window.innerWidth;
       confettiCanvas.height = window.innerHeight;
     }
-    window.addEventListener('resize', resizeConfetti);
-    resizeConfetti();
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-    class ConfettiPiece {
+    class Particle {
       constructor(x, y) {
         this.x = x || Math.random() * confettiCanvas.width;
         this.y = y || Math.random() * confettiCanvas.height - confettiCanvas.height;
-        this.size = Math.random() * 10 + 6;
-        this.speedX = (Math.random() - 0.5) * 8;
-        this.speedY = Math.random() * -6 - 4;
-        this.gravity = 0.25;
+        this.size = Math.random() * 10 + 5;
+        this.speedX = Math.random() * 6 - 3;
+        this.speedY = Math.random() * 5 + 2;
+        this.color = `hsl(${Math.random() * 360}, 90%, 65%)`;
         this.rotation = Math.random() * 360;
-        this.rotationSpeed = (Math.random() - 0.5) * 10;
-        this.color = ['#ff4081', '#ffd700', '#7c4dff', '#00e676', '#00b0ff', '#ff9100'][Math.floor(Math.random() * 6)];
-        this.opacity = 1;
+        this.rotationSpeed = Math.random() * 10 - 5;
+        this.shape = Math.random() > 0.5 ? 'circle' : 'rect';
       }
+
       update() {
-        this.speedY += this.gravity;
         this.x += this.speedX;
         this.y += this.speedY;
         this.rotation += this.rotationSpeed;
-        this.opacity -= 0.008;
+
+        if (this.y > confettiCanvas.height) {
+          this.y = -20;
+          this.x = Math.random() * confettiCanvas.width;
+        }
       }
+
       draw() {
-        confettiCtx.save();
-        confettiCtx.translate(this.x, this.y);
-        confettiCtx.rotate((this.rotation * Math.PI) / 180);
-        confettiCtx.globalAlpha = Math.max(0, this.opacity);
-        confettiCtx.fillStyle = this.color;
-        confettiCtx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
-        confettiCtx.restore();
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
+        ctx.fillStyle = this.color;
+
+        if (this.shape === 'circle') {
+          ctx.beginPath();
+          ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+        }
+        ctx.restore();
       }
     }
 
     function triggerConfettiBurst(originX, originY, count = 70) {
       for (let i = 0; i < count; i++) {
-        confettiParticles.push(new ConfettiPiece(originX, originY));
+        const p = new Particle(originX, originY);
+        p.speedY = Math.random() * -10 - 2;
+        p.speedX = Math.random() * 12 - 6;
+        particles.push(p);
       }
     }
 
-    function animateConfetti() {
-      confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-      confettiParticles = confettiParticles.filter(p => p.opacity > 0);
-      confettiParticles.forEach(p => {
+    function animateParticles() {
+      ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      particles.forEach((p, idx) => {
         p.update();
         p.draw();
       });
-      requestAnimationFrame(animateConfetti);
+      requestAnimationFrame(animateParticles);
     }
-    animateConfetti();
+    animateParticles();
 
-    /* ==========================================
-       4. UNWRAPPING & INITIAL REVEAL
-       ========================================== */
-    const giftOverlay = document.getElementById('giftOverlay');
+    // --- WEB AUDIO API TUNE SYNTHESIZER ---
+    function playMelodyTone(freq, duration, delay) {
+      if (!state.audioCtx) return;
+      setTimeout(() => {
+        try {
+          const osc = state.audioCtx.createOscillator();
+          const gain = state.audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, state.audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.15, state.audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, state.audioCtx.currentTime + duration);
 
-    giftOverlay.addEventListener('click', (e) => {
-      giftOverlay.classList.add('hidden');
-      triggerConfettiBurst(e.clientX, e.clientY, 120);
-      synth.startTune();
-      musicIcon.textContent = '🎶';
-      musicStatus.textContent = 'Music: ON';
-    });
+          osc.connect(gain);
+          gain.connect(state.audioCtx.destination);
 
-    /* ==========================================
-       5. INTERACTIVE CAKE CANDLE BLOWING
-       ========================================== */
-    const cakeContainer = document.getElementById('cakeContainer');
-    const flames = [document.getElementById('flame1'), document.getElementById('flame2'), document.getElementById('flame3')];
-    const smokes = [document.getElementById('smoke1'), document.getElementById('smoke2'), document.getElementById('smoke3')];
-    const cakeStatusText = document.getElementById('cakeStatusText');
-    let candlesBlown = false;
+          osc.start();
+          osc.stop(state.audioCtx.currentTime + duration);
+        } catch(e) {}
+      }, delay);
+    }
 
-    cakeContainer.addEventListener('click', (e) => {
-      if (!candlesBlown) {
-        candlesBlown = true;
-        flames.forEach(f => f.classList.add('out'));
-        smokes.forEach(s => s.classList.add('active'));
-        cakeStatusText.textContent = '🎉 Your wish has been sent to the universe!';
-        cakeStatusText.style.color = '#00e676';
-        
-        const rect = cakeContainer.getBoundingClientRect();
-        triggerConfettiBurst(rect.left + rect.width / 2, rect.top, 100);
+    function playHappyBirthdaySong() {
+      if (!state.audioCtx) {
+        state.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+
+      // Happy Birthday Notes Frequencies
+      const notes = [
+        { f: 261.63, d: 300 }, { f: 261.63, d: 300 }, { f: 293.66, d: 600 }, { f: 261.63, d: 600 }, { f: 349.23, d: 600 }, { f: 329.63, d: 1200 },
+        { f: 261.63, d: 300 }, { f: 261.63, d: 300 }, { f: 293.66, d: 600 }, { f: 261.63, d: 600 }, { f: 392.00, d: 600 }, { f: 349.23, d: 1200 }
+      ];
+
+      let totalDelay = 0;
+      notes.forEach((note) => {
+        playMelodyTone(note.f, note.d / 1000, totalDelay);
+        totalDelay += note.d + 50;
+      });
+    }
+
+    function playPopSound() {
+      try {
+        if (!state.audioCtx) {
+          state.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        const osc = state.audioCtx.createOscillator();
+        const gain = state.audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(400, state.audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(80, state.audioCtx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.3, state.audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, state.audioCtx.currentTime + 0.1);
+
+        osc.connect(gain);
+        gain.connect(state.audioCtx.destination);
+        osc.start();
+        osc.stop(state.audioCtx.currentTime + 0.1);
+      } catch(e) {}
+    }
+
+    // Toggle Audio Control
+    document.getElementById('btn-audio').addEventListener('click', () => {
+      state.isPlayingAudio = !state.isPlayingAudio;
+      const icon = document.getElementById('audio-icon');
+      if (state.isPlayingAudio) {
+        icon.className = "fa-solid fa-volume-high text-xl text-green-400";
+        playHappyBirthdaySong();
       } else {
-        // Relight candles on click
-        candlesBlown = false;
-        flames.forEach(f => f.classList.remove('out'));
-        smokes.forEach(s => s.classList.remove('active'));
-        cakeStatusText.textContent = '✨ Tap the cake to blow out the candles!';
-        cakeStatusText.style.color = '#ffd700';
+        icon.className = "fa-solid fa-music text-xl text-brand-pink";
       }
     });
 
-    /* ==========================================
-       6. DYNAMIC BALLOONS POPPING SYSTEM
-       ========================================== */
-    const balloonContainer = document.getElementById('balloonContainer');
-    const balloonColors = ['#ff4081', '#7c4dff', '#ffd700', '#00e676', '#ff9100', '#00b0ff', '#e91e63'];
+    // --- ENVELOPE OPENING HANDLER ---
+    const envelopeContainer = document.getElementById('envelope-container');
+    const screenIntro = document.getElementById('screen-intro');
+    const mainExperience = document.getElementById('main-experience');
 
-    function createBalloons() {
+    envelopeContainer.addEventListener('click', () => {
+      envelopeContainer.classList.add('envelope-open');
+      
+      // Explosion of particles
+      const rect = envelopeContainer.getBoundingClientRect();
+      triggerConfettiBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 120);
+
+      // Play introductory tune tone
+      if (!state.audioCtx) {
+        state.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      playHappyBirthdaySong();
+      state.isPlayingAudio = true;
+      document.getElementById('audio-icon').className = "fa-solid fa-volume-high text-xl text-green-400";
+
+      // Transition screens
+      setTimeout(() => {
+        screenIntro.classList.add('opacity-0');
+        setTimeout(() => {
+          screenIntro.style.display = 'none';
+          mainExperience.classList.remove('hidden');
+          setTimeout(() => {
+            mainExperience.classList.remove('opacity-0');
+          }, 50);
+        }, 1000);
+      }, 600);
+    });
+
+    // --- CANDLE BLOW OUT LOGIC ---
+    function popOrExtinguishCandle(index) {
+      const flame = document.getElementById(`flame-${index}`);
+      const smoke = document.getElementById(`smoke-${index}`);
+      if (flame && !flame.classList.contains('extinguished')) {
+        flame.classList.add('extinguished');
+        if (smoke) {
+          smoke.style.display = 'block';
+        }
+        playPopSound();
+        state.candlesLit--;
+        checkCandlesState();
+      }
+    }
+
+    function checkCandlesState() {
+      const instructions = document.getElementById('candle-instructions');
+      const relightBtn = document.getElementById('btn-relight-candles');
+      const blowBtn = document.getElementById('btn-blow-candles');
+
+      if (state.candlesLit <= 0) {
+        instructions.innerText = "🌟 All wishes blown into the universe! May all your dreams come true!";
+        relightBtn.classList.remove('hidden');
+        blowBtn.classList.add('hidden');
+        triggerConfettiBurst(window.innerWidth / 2, window.innerHeight / 2, 150);
+      }
+    }
+
+    document.getElementById('btn-blow-candles').addEventListener('click', () => {
+      for (let i = 0; i < 3; i++) {
+        popOrExtinguishCandle(i);
+      }
+    });
+
+    document.getElementById('btn-relight-candles').addEventListener('click', () => {
+      state.candlesLit = 3;
+      for (let i = 0; i < 3; i++) {
+        const flame = document.getElementById(`flame-${i}`);
+        const smoke = document.getElementById(`smoke-${i}`);
+        if (flame) flame.classList.remove('extinguished');
+        if (smoke) smoke.style.display = 'none';
+      }
+      document.getElementById('candle-instructions').innerText = "Click on the candle flames to blow out the candles!";
+      document.getElementById('btn-relight-candles').classList.add('hidden');
+      document.getElementById('btn-blow-candles').classList.remove('hidden');
+    });
+
+    // --- BALLOON SPAWNER & INTERACTION ---
+    const balloonContainer = document.getElementById('balloon-container');
+    const balloonColors = ['#ff758c', '#764ba2', '#ff7eb3', '#4facfe', '#00f2fe', '#ffb199'];
+
+    function spawnBalloons() {
       balloonContainer.innerHTML = '';
-      for (let i = 0; i < 7; i++) {
+      for (let i = 0; i < 6; i++) {
         const balloon = document.createElement('div');
-        balloon.className = 'balloon-item';
         const color = balloonColors[i % balloonColors.length];
-        balloon.style.backgroundColor = color;
-        balloon.style.animationDelay = `${Math.random() * 1.5}s`;
+        
+        balloon.className = "relative cursor-pointer transition-transform duration-300 hover:scale-110 animate-float flex flex-col items-center select-none";
+        balloon.style.animationDelay = `${i * 0.4}s`;
 
-        const string = document.createElement('div');
-        string.className = 'balloon-string';
-        balloon.appendChild(string);
+        balloon.innerHTML = `
+          <div class="w-12 h-16 md:w-16 md:h-20 rounded-full shadow-lg relative flex items-center justify-center" style="background: radial-gradient(circle at 30% 30%, #ffffff 0%, ${color} 70%);">
+            <div class="absolute top-2 left-3 w-3 h-4 bg-white/40 rounded-full blur-[1px]"></div>
+          </div>
+          <div class="w-2 h-2 bg-slate-400 rotate-45 -mt-1"></div>
+          <div class="w-0.5 h-12 bg-slate-400/50"></div>
+        `;
 
         balloon.addEventListener('click', (e) => {
-          if (balloon.classList.contains('popped')) return;
-          balloon.classList.add('popped');
-          synth.playPop();
-          
+          playPopSound();
           const rect = balloon.getBoundingClientRect();
-          triggerConfettiBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 25);
+          triggerConfettiBurst(rect.left + rect.width / 2, rect.top, 25);
+          
+          state.score += 10;
+          document.getElementById('balloon-score').innerText = state.score;
 
+          // Replace popped balloon
+          balloon.style.scale = '0';
+          balloon.style.opacity = '0';
           setTimeout(() => {
-            balloon.style.visibility = 'hidden';
-          }, 300);
+            balloon.remove();
+          }, 200);
         });
 
         balloonContainer.appendChild(balloon);
       }
     }
-    createBalloons();
+    spawnBalloons();
 
-    /* ==========================================
-       7. LIVE CUSTOMIZATION MODAL SYSTEM
-       ========================================== */
-    const openModalBtn = document.getElementById('openModalBtn');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const customModal = document.getElementById('customModal');
-    const saveCustomBtn = document.getElementById('saveCustomBtn');
-
-    const inputName = document.getElementById('inputName');
-    const inputAge = document.getElementById('inputAge');
-    const inputLetter = document.getElementById('inputLetter');
-
-    const displayName = document.getElementById('displayName');
-    const displayAge = document.getElementById('displayAge');
-    const displayLetter = document.getElementById('displayLetter');
-    const letterName = document.getElementById('letterName');
-
-    openModalBtn.addEventListener('click', () => {
-      customModal.classList.add('open');
+    document.getElementById('btn-spawn-balloons').addEventListener('click', () => {
+      spawnBalloons();
     });
 
-    closeModalBtn.addEventListener('click', () => {
-      customModal.classList.remove('open');
+    // --- CUSTOMIZER MODAL CONTROLLER ---
+    const modalCustomizer = document.getElementById('modal-customizer');
+    const btnCustomizer = document.getElementById('btn-customizer');
+    const btnCloseModal = document.getElementById('btn-close-modal');
+    const btnSaveCustomizer = document.getElementById('btn-save-customizer');
+
+    function openModal() {
+      document.getElementById('input-name').value = state.name;
+      document.getElementById('input-age').value = state.age;
+      document.getElementById('input-message').value = state.message;
+
+      modalCustomizer.classList.remove('hidden');
+      setTimeout(() => modalCustomizer.classList.remove('opacity-0'), 10);
+    }
+
+    function closeModal() {
+      modalCustomizer.classList.add('opacity-0');
+      setTimeout(() => modalCustomizer.classList.add('hidden'), 300);
+    }
+
+    btnCustomizer.addEventListener('click', openModal);
+    btnCloseModal.addEventListener('click', closeModal);
+
+    btnSaveCustomizer.addEventListener('click', () => {
+      const nameVal = document.getElementById('input-name').value.trim();
+      const ageVal = document.getElementById('input-age').value.trim();
+      const msgVal = document.getElementById('input-message').value.trim();
+
+      if (nameVal) state.name = nameVal;
+      if (ageVal) state.age = ageVal;
+      if (msgVal) state.message = msgVal;
+
+      // Update DOM
+      document.getElementById('display-name').innerText = state.name;
+      document.getElementById('display-age').innerText = state.age;
+      document.getElementById('display-message').innerText = state.message;
+
+      closeModal();
+      triggerConfettiBurst(window.innerWidth / 2, window.innerHeight / 3, 50);
     });
 
-    saveCustomBtn.addEventListener('click', () => {
-      const newName = inputName.value.trim() || 'Thanmaie';
-      const newAge = inputAge.value.trim() || 'Heavenly Twenty';
-      const newLetter = inputLetter.value.trim();
-
-      displayName.textContent = newName;
-      letterName.textContent = newName;
-      displayAge.textContent = newAge;
-      displayLetter.textContent = newLetter;
-
-      customModal.classList.remove('open');
-      triggerConfettiBurst(window.innerWidth / 2, window.innerHeight / 2, 50);
-    });
+    // Initialization trigger for particles canvas background
+    window.onload = function() {
+      // Spawn initial background static floating particles
+      for (let i = 0; i < 25; i++) {
+        particles.push(new Particle());
+      }
+    };
   </script>
 </body>
 </html>
